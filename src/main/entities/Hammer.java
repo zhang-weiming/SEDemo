@@ -3,6 +3,7 @@ package main.entities;
 /**
  * 锤子
  * @author zwm12
+ * @version v0.1
  */
 public class Hammer {
 	/**
@@ -27,6 +28,7 @@ public class Hammer {
 	
 	/**
 	 * 无参构造方法
+	 * 链接-<a href="https://www.baidu.com"><i>百度</i></a>
 	 */
 	public Hammer() {
 		;
