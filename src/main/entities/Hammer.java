@@ -1,28 +1,30 @@
 package main.entities;
 
+import java.io.Serializable;
+
 /**
  * 锤子
  * @author zwm12
  * @version v0.1
  */
-public class Hammer {
+public class Hammer implements Serializable {
 	/**
-	 * 编号
+	 * <p style="color:#f00">编号</p>
 	 */
 	private String id;
 	
 	/**
-	 * 名称
+	 * <p style="color:#f00">名称</p>
 	 */
 	private String name;
 	
 	/**
-	 * 归类
+	 * <p style="color:#f00">归类</p>
 	 */
 	private String classification;
 	
 	/**
-	 * 重量
+	 * <p style="color:#f00">重量</p>
 	 */
 	private double weight;
 	
@@ -36,10 +38,10 @@ public class Hammer {
 	
 	/**
 	 * 全参构造方法
-	 * @param id
-	 * @param name
-	 * @param classification
-	 * @param weight
+	 * @param id <p style="color:#f00">编号</p>
+	 * @param name <p style="color:#f00">名称</p>
+	 * @param classification <p style="color:#f00">归类</p>
+	 * @param weight <p style="color:#f00">重量</p>
 	 */
 	public Hammer(String id, String name, String classification, double weight) {
 		this.id = id;
@@ -50,12 +52,24 @@ public class Hammer {
 
 	/**
 	 * 使用参数字符串数组初始化类
-	 * @param items
+	 * @param items 顺序保存所有参数的数组
 	 */
 	public Hammer(String[] items) {
 		this.id = items[0];
 		this.name = items[1];
 		this.classification = items[2];
+		this.weight = Double.parseDouble(items[3].trim());
+	}
+
+	/**
+	 * 使用全参数csv格式字符串初始化类
+	 * @param csvParams csv格式的字符串
+	 */
+	public Hammer(String csvParams) {
+		String[] items = csvParams.split(",");
+		this.id = items[0].trim();
+		this.name = items[1].trim();
+		this.classification = items[2].trim();
 		this.weight = Double.parseDouble(items[3].trim());
 	}
 
