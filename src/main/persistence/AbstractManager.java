@@ -3,6 +3,9 @@ package main.persistence;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * 抽象类
+ */
 public abstract class AbstractManager {
     private File objectFile = null;
 
@@ -13,8 +16,17 @@ public abstract class AbstractManager {
     public AbstractManager(File objectFile){
         this.objectFile = objectFile;
     }
+
+    /**
+     * 设置持久化文件对象
+     * @param objectFile
+     */
     public void setObjectFile(File objectFile){
         this.objectFile = objectFile;
+    }
+
+    public File getObjectFile() {
+        return this.objectFile;
     }
 
     /**
@@ -26,9 +38,10 @@ public abstract class AbstractManager {
     /**
      * 从持久化文件中读入第i个对象.
      * @param i
+     * @Return
      * @throws IOException
      */
-    public abstract void read(int i) throws IOException;
+    public abstract Object read(int i) throws IOException;
 
     /**
      * 读入全部对象到数组中.

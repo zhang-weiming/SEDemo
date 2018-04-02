@@ -105,14 +105,18 @@ public class Hammer implements Serializable {
 		this.weight = weight;
 	}
 
+	public String toCsvString() {
+		return String.format("%s,%s,%s,%f",
+				this.id, this.name, this.classification, this.weight);
+	}
+
 	@Override
 	public String toString() {
 //		String res = String.format(
 //				"<hammer><id>%s</id><name>%s</name><classification>%s</classification><weight>%f</weight></hammer>",
 //				this.id, this.name, this.classification, this.weight);
-		String res = String.format(
+		return String.format(
 				"Hammer: id=%s, name=%s, classification=%s, weight=%.2fKg",
 				this.id, this.name, this.classification, this.weight);
-		return res;
 	}
 }
