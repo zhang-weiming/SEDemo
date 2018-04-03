@@ -101,7 +101,7 @@ public class HammerManager extends AbstractManager {
      * @throws IOException
      */
     @Override
-    public Object[] read() throws IOException {
+    public Hammer[] read() throws IOException {
         if (super.getObjectFile() == null) {
             throw new FileNotFoundException("持久化文件对象未初始化");
         }
@@ -122,7 +122,9 @@ public class HammerManager extends AbstractManager {
         }
 
         ois.close();
-        return hammers.toArray();
+
+        Hammer[] array = new Hammer[hammers.size()];
+        return hammers.toArray(array);
     }
 
     /**

@@ -1,6 +1,7 @@
 package main.clients;
 
 import main.entities.Hammer;
+import main.interfaces.HammerEncoder;
 import main.persistence.HammerManager;
 
 import java.io.File;
@@ -14,12 +15,8 @@ public class TestClient {
     public static void main(String[] args) throws Exception {
         init();
 
-//        testSave();
-
-//        testRead();
-//        testReadAll();
-
-        testRemove();
+        HammerEncoder.toHTML(hammerManager.read(),
+                new File(config.getProperty("rootPath")+config.getProperty("htmlFile")));
     }
 
     public static void init() throws Exception {
@@ -57,10 +54,10 @@ public class TestClient {
      * @throws Exception
      */
     public static void testReadAll() throws Exception {
-        Object[] hammers = hammerManager.read();
+        Hammer[] hammers = hammerManager.read();
 
-        for (Object hammer : hammers)
-            System.out.println((Hammer) hammer);
+        for (Hammer hammer : hammers)
+            System.out.println(hammer);
     }
 
     /**
