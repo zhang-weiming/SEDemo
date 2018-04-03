@@ -16,7 +16,10 @@ public class TestClient {
 
 //        testSave();
 
-        testRead();
+//        testRead();
+//        testReadAll();
+
+        testRemove();
     }
 
     public static void init() throws Exception {
@@ -26,18 +29,47 @@ public class TestClient {
                 new File(config.getProperty("rootPath") + config.getProperty("dbFile")));
     }
 
+
+    /**
+     * 测试对象持久化存储功能
+     * @throws Exception
+     */
     public static void testSave() throws Exception {
         hammerManager.getHammers().add(
                 new Hammer("1", "Sam Hammer", "class1", 20.0));
-        hammerManager.addHammer(
+        hammerManager.getHammers().add(
                 new Hammer("2", "Harry Hammer", "class1", 25.0));
 
         hammerManager.save();
-
         System.out.println("存储完毕");
     }
 
+    /**
+     * 测试对象持久化读取功能
+     * @throws Exception
+     */
     public static void testRead() throws Exception {
         System.out.println(hammerManager.read(2));
+    }
+
+    /**
+     * 测试对象持久化读取所有对象功能
+     * @throws Exception
+     */
+    public static void testReadAll() throws Exception {
+        Object[] hammers = hammerManager.read();
+
+        for (Object hammer : hammers)
+            System.out.println((Hammer) hammer);
+    }
+
+    /**
+     * 测试对象持久化删除指定对象功能
+     * @throws Exception
+     */
+    public static void testRemove() throws Exception {
+        hammerManager.remove(new Hammer("2,Harry Hammer,class1,25.0"));
+
+        testReadAll();
     }
 }

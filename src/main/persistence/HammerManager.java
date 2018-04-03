@@ -34,13 +34,13 @@ public class HammerManager extends AbstractManager {
         return this.hammers;
     }
 
-    public void addHammer(Hammer hammer) {
-        this.hammers.add(hammer);
-    }
-
-    public void addAllHammer(List<Hammer> hammers) {
-        this.hammers.addAll(hammers);
-    }
+//    public void addHammer(Hammer hammer) {
+//        this.hammers.add(hammer);
+//    }
+//
+//    public void addAllHammer(List<Hammer> hammers) {
+//        this.hammers.addAll(hammers);
+//    }
 
     /**
      * 保存对象到持久化文件中
@@ -52,16 +52,15 @@ public class HammerManager extends AbstractManager {
             throw new FileNotFoundException("持久化文件对象未初始化");
         }
 
-        BufferedWriter bufw = new BufferedWriter(
-                new OutputStreamWriter(new FileOutputStream(super.getObjectFile()), "UTF-8"));
+        ObjectOutputStream oos = new ObjectOutputStream(
+                new FileOutputStream(super.getObjectFile()));
 
         for (Hammer hammer : this.hammers) {
-            bufw.write(hammer.toCsvString());
-            bufw.flush();
-            bufw.newLine();
+            oos.writeObject(hammer);
         }
 
-        bufw.close();
+        oos.flush();
+        oos.close();
     }
 
     /**
@@ -76,25 +75,74 @@ public class HammerManager extends AbstractManager {
             throw new FileNotFoundException("持久化文件对象未初始化");
         }
 
-        BufferedReader bufr = new BufferedReader(
-                new InputStreamReader(new FileInputStream(super.getObjectFile()), "UTF-8"));
+        ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream(super.getObjectFile())
+        );
 
-        String str = null;
-        while ((str = bufr.readLine()) != null) {
-            if (--i == 0)
-                return new Hammer(str);
+        try {
+            Hammer hammer = null;
+            while ((hammer = (Hammer) ois.readObject()) != null) {
+                if (--i == 0)
+                    return hammer;
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (EOFException e) {
+            // pass
         }
 
+        ois.close();
         return null;
     }
 
     @Override
-    public Hammer[] read() throws IOException {
-        return null;
+    public Object[] read() throws IOException {
+        if (super.getObjectFile() == null) {
+            throw new FileNotFoundException("持久化文件对象未初始化");
+        }
+
+        ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream(super.getObjectFile()));
+        List<Hammer> hammers = new ArrayList<>();
+
+        try {
+            Hammer hammer = null;
+            while ((hammer = (Hammer) ois.readObject()) != null) {
+                hammers.add(hammer);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (EOFException e) {
+            // pass
+        }
+
+        ois.close();
+        return hammers.toArray();
     }
 
     @Override
     public void remove(Object object) throws IOException {
+        if (super.getObjectFile() == null) {
+            throw new FileNotFoundException("持久化文件对象未初始化");
+        }
 
+        String objectCsvString = ((Hammer) object).toCsvString();
+        ObjectInputStream ois = new ObjectInputStream(
+                new FileInputStream(super.getObjectFile()));
+        List<Hammer> hammers = new ArrayList<>();
+
+        try {
+            Hammer hammer = null;
+            while ((hammer = (Hammer) ois.readObject()) != null)
+                if (!hammer.toCsvString().equals(objectCsvString))
+                    hammers.add(hammer);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (EOFException e) {
+            // pass
+        }
+
+        this.hammers = hammers;
+        this.save();
     }
 }
