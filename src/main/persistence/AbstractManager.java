@@ -4,7 +4,11 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * 抽象类
+ * 实体对象管理抽象类，功能包括：<br>
+ *     存储多个对象
+ *     读取指定位置的对象
+ *     读取所有对象
+ *     删除指定对象
  */
 public abstract class AbstractManager {
     private File objectFile = null;

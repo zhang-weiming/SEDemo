@@ -95,6 +95,11 @@ public class HammerManager extends AbstractManager {
         return null;
     }
 
+    /**
+     * 从持久化文件中读取所有对象
+     * @return
+     * @throws IOException
+     */
     @Override
     public Object[] read() throws IOException {
         if (super.getObjectFile() == null) {
@@ -120,6 +125,11 @@ public class HammerManager extends AbstractManager {
         return hammers.toArray();
     }
 
+    /**
+     * 从持久化文件中删除指定对象
+     * @param object
+     * @throws IOException
+     */
     @Override
     public void remove(Object object) throws IOException {
         if (super.getObjectFile() == null) {
