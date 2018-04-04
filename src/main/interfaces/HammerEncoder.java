@@ -8,17 +8,37 @@ public class HammerEncoder {
     // 用HTML表格封装对象属性值
     public static void toHTML(Hammer[] hammers, File file) throws IOException {
         String html =
-                "<!DOCTYPE html>" +
-                "<html>" +
-                    "<head><meta charset='utf-8'><title>Hammers</title></head>" +
-                    "<body>" +
-                        "<table border='1' cellspacing='0'>" +
-                            "<tr><th></th><th>Id</th><th>Name</th><th>Class</th><th>Weight(Kg)</th></tr>" +
-                            "%s" +
-                        "</table>" +
-                    "</body>" +
-                "</html>";
-        String tr = "<tr><td>%d</td><td>%s</td><td>%s</td><td>%s</td><td>%f</td></tr>";
+                "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "    <head>\n" +
+                "        <meta charset=\"utf-8\">\n" +
+                "        <title>Hammers</title>\n" +
+                "        <link rel=\"stylesheet\" href=\"https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css\" integrity=\"sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm\" crossorigin=\"anonymous\">\n" +
+                "    </head>\n" +
+                "    <body>\n" +
+                "        <table class=\"table\">\n" +
+                "            <thead>\n" +
+                "                <tr>\n" +
+                "                    <th scope=\"col\">#</th>\n" +
+                "                    <th scope=\"col\">Id</th>\n" +
+                "                    <th scope=\"col\">Name</th>\n" +
+                "                    <th scope=\"col\">Classification</th>\n" +
+                "                    <th scope=\"col\">Weight(Kg)</th>\n" +
+                "                </tr>\n" +
+                "            </thead>\n" +
+                "            <tbody>\n" +
+                "                %s\n" +
+                "            </tbody>\n" +
+                "        </table>\n" +
+                "    </body>\n" +
+                "</html>\n";
+        String tr = "<tr>\n" +
+                "      <th scope=\"row\">%d</th>\n" +
+                "      <td>%s</td>\n" +
+                "      <td>%s</td>\n" +
+                "      <td>%s</td>\n" +
+                "      <td>%f</td>\n" +
+                "    </tr>\n";
 
         String trs = "";
         int cnt = 1;
